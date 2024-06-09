@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding JavaScript Objects</title>
+    <link rel="stylesheet" href="style.css"
+</head>
+<body>
+    <div class="container">
+        <h1>Understanding JavaScript Objects and Their Internal Representation</h1>
+        <p>
+            JavaScript objects are versatile structures that can represent real-world entities by bundling properties and methods together. 
+            This blog delves into how objects work internally and how prototypes form the backbone of JavaScript inheritance.
+        </p>
+
+        <h2>1. What is an Object in JavaScript?</h2>
+        <p>
+            An object in JavaScript is a collection of key-value pairs, where keys are strings (or symbols) and values can be of any data type, including other objects and functions. 
+            This makes objects flexible and powerful tools for modeling complex data and behaviors.
+        </p>
+
+        <h3>Creating an Object</h3>
+        <pre><code class="language-javascript">
+// Object literal syntax
+let car = {
+    make: "Toyota",
+    model: "Corolla",
+    year: 2021,
+    start: function() {
+        console.log("The car has started.");
+    }
+};
+        </code></pre>
+
+        <h3>Accessing Object Properties</h3>
+        <p>You can access object properties using dot notation or bracket notation:</p>
+        <pre><code class="language-javascript">
+console.log(car.make); // Output: Toyota
+console.log(car["model"]); // Output: Corolla
+        </code></pre>
+
+        <h2>2. Internal Representation of Objects</h2>
+        <p>
+            Internally, JavaScript objects are implemented as hash tables, allowing efficient retrieval of values by their keys.
+            Each property in an object has a property descriptor, which includes attributes like `value`, `writable`, `enumerable`, and `configurable`.
+        </p>
+
+        <h3>Property Descriptors</h3>
+        <p>You can examine a property’s descriptor using the <code>Object.getOwnPropertyDescriptor</code> method:</p>
+        <pre><code class="language-javascript">
+let descriptor = Object.getOwnPropertyDescriptor(car, 'make');
+console.log(descriptor);
+// Output: { value: "Toyota", writable: true, enumerable: true, configurable: true }
+        </code></pre>
+
+        <h2>3. Prototypes and Inheritance</h2>
+        <p>
+            Every JavaScript object has a prototype, which is also an object. This prototype chain allows objects to inherit properties and methods from other objects.
+            When a property or method is accessed on an object, JavaScript first looks at the object itself and then follows the prototype chain if necessary.
+        </p>
+
+        <h3>Prototype Chain</h3>
+        <p>Let's explore the prototype chain of our <code>car</code> object:</p>
+        <div id="prototype-chain"></div>
+
+        <h3>Visualizing the Prototype Chain</h3>
+        <p>The following JavaScript code dynamically displays the prototype chain of an object:</p>
+        <pre><code class="language-javascript">
+// JavaScript code to display the prototype chain
+function displayPrototypeChain(obj, elementId) {
+    let outputDiv = document.getElementById(elementId);
+    let proto = Object.getPrototypeOf(obj);
+    let level = 0;
+
+    while (proto) {
+        let protoDiv = document.createElement('div');
+        protoDiv.className = 'prototype';
+        
+        let title = document.createElement('h3');
+        title.innerText = `Prototype Level ${level}`;
+        protoDiv.appendChild(title);
+        
+        for (let key in proto) {
+            if (proto.hasOwnProperty(key)) {
+                let propDiv = document.createElement('div');
+                propDiv.className = 'property';
+                propDiv.innerText = `${key}: ${proto[key]}`;
+                protoDiv.appendChild(propDiv);
+            }
+        }
+
+        outputDiv.appendChild(protoDiv);
+        proto = Object.getPrototypeOf(proto);
+        level++;
+    }
+}
+
+// Example usage
+displayPrototypeChain(car, 'prototype-chain');
+        </code></pre>
+
+        <h2>4. Conclusion</h2>
+        <p>
+            Understanding JavaScript objects and their internal representation helps in writing efficient and clean code. 
+            Objects form the backbone of JavaScript’s ability to model and manipulate complex data. 
+            By grasping the concept of prototypes and inheritance, you can leverage JavaScript to build more robust and scalable applications.
+        </p>
+    </div>
+    <script src="script .js"></script>
+</body>
+</html>
